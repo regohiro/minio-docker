@@ -6,7 +6,8 @@ services:
       - 9000:9000
       - 9001:9001
     networks:
-      - minio-network
+      minio-network:
+        ipv4_address: ${MINIO_IPV4_ADDRESS}
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
@@ -18,3 +19,8 @@ services:
 networks:
   minio-network:
     external: true
+    driver: bridge
+    ipam:
+     driver: default
+     config:
+       - subnet: ${DOCKER_SUBNET}
